@@ -27,7 +27,8 @@ The goal of this project is to learn through practice by implementing a variety 
 
 ## Tests
 
-1. *k*-armed Bandit Problems
+1. *k*-armed Bandit
+2. 
 
 ## Integrations
 
