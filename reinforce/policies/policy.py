@@ -8,5 +8,5 @@ class Policy:
     def policy_label(self):
         return str(self.name)
 
-    def apply(self, estimated_rewards):
-        return np.random.choice(len(estimated_rewards))
+    def apply(self, estimated_values):
+        return np.random.choice(len(estimated_values))

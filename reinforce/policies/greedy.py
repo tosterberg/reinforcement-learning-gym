@@ -9,9 +9,9 @@ class GreedyPolicy(Policy):
     def policy_label(self):
         return str(self.name)
 
-    def apply(self, estimated_rewards):
-        greedy_action = np.argmax(estimated_rewards)
-        action = np.where(estimated_rewards == np.argmax(estimated_rewards))[0]
+    def apply(self, estimated_values):
+        greedy_action = np.argmax(estimated_values)
+        action = np.where(estimated_values == np.argmax(estimated_values))[0]
         if len(action) == 0:
             return greedy_action
         return np.random.choice(action)

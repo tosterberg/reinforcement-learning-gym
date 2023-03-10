@@ -9,7 +9,7 @@ class Agent:
         self.last_action = None
         self.k_actions = np.zeros(self.num_actions)
         self.rewards = np.zeros(self.num_actions)
-        self.estimated_rewards = np.zeros(self.num_actions)
+        self.estimated_values = np.zeros(self.num_actions)
         for k, v in kwargs.items():
             setattr(self, k, v)
 
@@ -23,11 +23,11 @@ class Agent:
         self.rewards[self.last_action] += reward
 
         # Update action-value sum(r)/ka
-        self.estimated_rewards[self.last_action] = self.rewards[self.last_action] / self.k_actions[self.last_action]
+        self.estimated_values[self.last_action] = self.rewards[self.last_action] / self.k_actions[self.last_action]
         self.step_count += 1
 
     def act(self):
-        self.last_action = self.policy.apply(self.estimated_rewards)
+        self.last_action = self.policy.apply(self.estimated_values)
         return self.last_action
 
     def reset(self):
@@ -35,4 +35,4 @@ class Agent:
         self.last_action = None
         self.k_actions = np.zeros(self.num_actions)
         self.rewards = np.zeros(self.num_actions)
-        self.estimated_rewards = np.zeros(self.num_actions)
+        self.estimated_values = np.zeros(self.num_actions)
