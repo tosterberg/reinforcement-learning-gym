@@ -17,12 +17,10 @@ class Environment:
         scores = np.zeros((self.steps, len(self.agents)))
         optimal_scores = np.zeros((self.steps, len(self.agents)))
         self.setup_tests(scores, optimal_scores)
-        print(self.result_scores)
-        print(self.result_opt)
+        return self.result_scores, self.result_opt
 
     def setup_tests(self, scores, optimal_scores):
         for test in range(self.iterations):
-            print(f'Test: {test}')
             self.scenario.reset()
             for agent in self.agents:
                 agent.reset()

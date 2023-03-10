@@ -1,7 +1,5 @@
-from reinforce.scenarios.stationary_bandit import StationaryBandit
-from reinforce.policies.greedy import GreedyPolicy
-from reinforce.policies.epsilon_greedy import EpsilonGreedyPolicy
-from reinforce.policies.policy import Policy
+from reinforce.scenarios.bandit import StationaryBandit
+from reinforce.policies.policy import Policy, GreedyPolicy, EpsilonGreedyPolicy
 from reinforce.agents.agent import Agent
 from reinforce.environments.environment import Environment
 
@@ -20,4 +18,6 @@ if __name__ == '__main__':
         Agent(num_actions=k, policy=policies[2])
     ]
     environment = Environment(scenario=scenario, agents=agents, steps=2000, iterations=100)
-    environment.run()
+    scores, opt = environment.run()
+    print(scores)
+    print(opt)
