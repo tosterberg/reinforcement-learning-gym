@@ -42,7 +42,7 @@ class Bandit:
         return utils.dict_to_string(self)
 
     def scenario_label(self):
-        return f'{self.label}: arms={self.arms}, mean={self.mean}, seed={self.seed}'
+        return f'{self.label}: arms={self.arms}, mean={self.mean}, std={self.std}'
 
     def summarize(self):
         print(self.scenario_label())
