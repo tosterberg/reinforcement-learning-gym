@@ -2,9 +2,9 @@ import numpy as np
 
 
 class Environment:
-    def __init__(self, scenario, agents, steps, iterations, **kwargs):
+    def __init__(self, scenario, agent, steps, iterations, **kwargs):
         self.scenario = scenario
-        self.agents = agents
+        self.agent = agent
         self.steps = steps
         self.iterations = iterations
         self.result_scores = list()
@@ -14,35 +14,33 @@ class Environment:
         self._validate()
 
     def run(self):
-        scores = np.zeros((self.steps, len(self.agents)))
-        optimal_scores = np.zeros((self.steps, len(self.agents)))
+        scores = np.zeros(self.steps)
+        optimal_scores = np.zeros(self.steps)
         self.setup_tests(scores, optimal_scores)
         return self.result_scores, self.result_opt
 
     def setup_tests(self, scores, optimal_scores):
         for test in range(self.iterations):
             self.scenario.reset()
-            for agent in self.agents:
-                agent.reset()
-                avg, opt = self.score_agents(scores, optimal_scores)
-                self.result_scores.append(avg)
-                self.result_opt.append(opt)
+            self.agent.reset()
+            avg, opt = self.score_agent(scores, optimal_scores)
+            self.result_scores.append(avg)
+            self.result_opt.append(opt)
 
-    def score_agents(self, scores, optimal_scores):
+    def score_agent(self, scores, optimal_scores):
         for step in range(self.steps):
-            for idx, agent in enumerate(self.agents):
-                action = agent.act()
-                reward = self.scenario.reward(action)
-                agent.learn(reward)
-                scores[step, idx] += reward
-                if action == self.scenario.opt:
-                    optimal_scores[step, idx] += 1
+            action = self.agent.play()
+            reward = self.scenario.reward(action)
+            self.agent.learn(reward)
+            scores[step] += reward
+            if action == self.scenario.opt:
+                optimal_scores[step] += 1
         avg_score = scores / self.iterations
         opt_score = optimal_scores / self.iterations
         return avg_score, opt_score
 
     def _validate(self):
         assert (self.scenario is not None)
-        assert (len(self.agents) > 0)
+        assert (self.agent is not None)
         assert (self.iterations > 0)
         assert (self.steps > 0)

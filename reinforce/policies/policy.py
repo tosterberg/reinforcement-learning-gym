@@ -8,18 +8,33 @@ class Policy:
     def policy_label(self):
         return str(self.name)
 
-    def apply(self, estimated_values):
+    def apply(self, estimated_values, num_actions):
         return np.random.choice(len(estimated_values))
 
 
 class GreedyPolicy(Policy):
-    def __init__(self):
+    def __init__(self, alt_init_value=None):
         super().__init__(name='Greedy')
+        self.initialized = False  # Set to true after trying every arm once then greedy
+        self.alt_init_value = alt_init_value
+        self. explored = None
 
     def policy_label(self):
         return str(self.name)
 
-    def apply(self, estimated_values):
+    def initial_plays(self, num_actions):
+        if self.explored is None:
+            self.explored = num_actions
+            return self.explored
+        action = self.explored
+        self.explored -= 1
+        if self.explored == -1:
+            self.initialized = True
+        return action
+
+    def apply(self, estimated_values, num_actions):
+        if not self.initialized:
+            return self.initial_plays(num_actions)
         greedy_action = np.argmax(estimated_values)
         action = np.where(estimated_values == np.argmax(estimated_values))[0]
         if len(action) == 0:
@@ -36,7 +51,7 @@ class EpsilonGreedyPolicy(Policy):
     def policy_label(self):
         return str(self.name)
 
-    def apply(self, estimated_values):
+    def apply(self, estimated_values, num_actions):
         self.estimated_values = estimated_values
         if np.random.random() < self.epsilon:
             return self.explore()

@@ -4,26 +4,6 @@ from reinforce.utils import utils
 
 class Bandit:
     """
-        Bandit class interface
-            arms - number of bandits available in environment for reward
-            mean - the mean value of the distribution of each bandit
-            std - the standard deviation of the distribution of each bandit
-    """
-    def __init__(self, arms=0, mean=0, std=1, **kwargs):
-        self.arms = arms
-        self.mean = mean
-        self.std = std
-        for k, v in kwargs.items():
-            setattr(self, k, v)
-        self._validate()
-        self.actions = np.zeros(self.arms)
-
-    def _validate(self):
-        assert (self.arms > 0)
-
-
-class StationaryBandit(Bandit):
-    """
         StationaryBandit class
             A bandit class implementation with stationary action values; i.e. the distributions
             do not change from step to step
@@ -38,12 +18,21 @@ class StationaryBandit(Bandit):
             distribution_func - the np.random function for the given distribution
             reset - resets the bandit arms action values to new values
     """
-    def __init__(self, distribution='normal', reward_dist='normal', scale=1, **kwargs):
+    def __init__(self, arms=0, mean=0, std=1, seed=42,
+                 distribution='normal', reward_dist='normal', scale=1, **kwargs):
+        self.arms = arms
+        self.mean = mean
+        self.std = std
+        self.seed = seed
+        np.random.seed(self.seed)
         self.distribution = distribution
         self.reward_dist = reward_dist
         self.scale = scale
-        self.label = 'StationaryBandit'
-        super().__init__(**kwargs)
+        self.label = 'Bandit'
+        for k, v in kwargs.items():
+            setattr(self, k, v)
+        self._validate()
+        self.actions = np.zeros(self.arms)
         self.distribution_func = getattr(np.random, self.distribution)
         self.reward_func = getattr(np.random, self.reward_dist)
         self.opt = 0
@@ -53,7 +42,10 @@ class StationaryBandit(Bandit):
         return utils.dict_to_string(self)
 
     def scenario_label(self):
-        return str(self.label)
+        return f'{self.label}: arms={self.arms}, mean={self.mean}, seed={self.seed}'
+
+    def summarize(self):
+        print(self.scenario_label())
 
     def reward(self, choice):
         return self.reward_func(self.actions[choice], scale=self.scale)
@@ -62,5 +54,6 @@ class StationaryBandit(Bandit):
         self.actions = self.distribution_func(self.mean, self.std, self.arms)
         self.opt = np.argmax(self.actions)
 
-    def _validate_kwargs(self):
+    def _validate(self):
+        assert (self.arms > 0)
         assert (hasattr(np.random, self.distribution))
