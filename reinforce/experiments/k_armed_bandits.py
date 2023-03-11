@@ -2,12 +2,7 @@ from reinforce.scenarios.bandit import Bandit
 from reinforce.policies.policy import EpsilonGreedyPolicy, GreedyPolicy, Policy
 from reinforce.agents.agent import Agent
 from reinforce.environments.environment import Environment
-
-
-def show_summary(s, a, vals):
-    print(s.scenario_label())
-    print(a.agent_label())
-    print(f'{sum(sum(vals)):,.2f}\n')
+from reinforce.utils.utils import show_summary
 
 
 if __name__ == '__main__':
