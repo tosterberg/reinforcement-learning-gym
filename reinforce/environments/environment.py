@@ -22,9 +22,9 @@ class EnvironmentResult(object):
 
     def __str__(self):
         output = ''
-        output += f'Environment: steps={self.steps}, iterations={self.iterations}\n'
-        output += f'{self.scenario_label}\n'
         output += f'{self.agent_label}\n'
+        output += f'{self.scenario_label}\n'
+        output += f'Environment: steps={self.steps}, iterations={self.iterations}\n'
         output += f'Total reward: {sum(sum(self.scores)):,.2f}\n'
         return output
 

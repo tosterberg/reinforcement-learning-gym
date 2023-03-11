@@ -29,12 +29,6 @@ class Agent:
         self.last_action = self.policy.apply(self.estimated_action_values, self.num_actions)
         return self.last_action
 
-    def summarize(self):
-        print(self.agent_label())
-        print(sum(self.actions_total_rewards))
-        print(self.action_counts)
-        print(self.__dict__)
-
     def reset(self):
         self.last_action = None
         self.action_counts = np.zeros(self.num_actions)
