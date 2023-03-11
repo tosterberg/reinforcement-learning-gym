@@ -2,6 +2,15 @@ import numpy as np
 
 
 class Policy:
+    """
+        Policy class
+            interface
+                name: overwrite the specified policy name for reporting
+            methods
+                apply: given estimated rewards, and number of actions available
+                    returns the action determined by the policy
+                policy_label: returns the name of the policy
+    """
     def __init__(self, name='Random'):
         self.name = name
 
@@ -13,6 +22,20 @@ class Policy:
 
 
 class GreedyPolicy(Policy):
+    """
+        GreedyPolicy class extends Policy class
+            interface
+                initialized: default False, toggles whether the estimated values coming into the policy
+                    have been initialized or not. i.e. pull each arm once, or optimize from current
+                    values
+            variables
+                explored: track indexes of arms not yet pulled, -1 when all arms have been pulled
+            methods
+                policy_label: returns label for identifying the policy
+                initial_plays: schedules exploration of arms given uninitialized estimates and explored is not -1
+                apply: given estimated rewards, and number of actions available
+                    returns the action determined by the greedy policy
+    """
     def __init__(self, initialized=False):
         super().__init__(name='Greedy')
         self.initialized = initialized  # Set to true after trying every arm once then greedy
@@ -43,6 +66,18 @@ class GreedyPolicy(Policy):
 
 
 class EpsilonGreedyPolicy(Policy):
+    """
+        GreedyPolicy class extends Policy class
+        interface
+                epsilon: probability that exploratory actions are taken rather than greedy actions
+            methods
+                apply: given estimated rewards, and number of actions available
+                    returns the action determined by the policy
+                policy_label: returns the name of the policy
+            private methods:
+                _greedy: applies greedy search to estimated_values to determine action
+                _explore: applies random play to actions to determine action
+    """
     def __init__(self, epsilon=0.1):
         self.estimated_values = None
         self.epsilon = epsilon
@@ -54,11 +89,11 @@ class EpsilonGreedyPolicy(Policy):
     def apply(self, estimated_values, num_actions):
         self.estimated_values = estimated_values
         if np.random.random() < self.epsilon:
-            return self.explore()
+            return self._explore()
         else:
-            return self.greedy()
+            return self._greedy()
 
-    def greedy(self):
+    def _greedy(self):
         if self.estimated_values is None:
             raise Exception("Call apply function")
         greedy_action = np.argmax(self.estimated_values)
@@ -67,7 +102,7 @@ class EpsilonGreedyPolicy(Policy):
             return greedy_action
         return np.random.choice(action)
 
-    def explore(self):
+    def _explore(self):
         if self.estimated_values is None:
             raise Exception("Call apply function")
         return np.random.choice(len(self.estimated_values))

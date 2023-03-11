@@ -27,7 +27,7 @@ class EnvironmentResult(object):
         output += f'{self.scenario_label}\n'
         output += f'Environment: steps={self.steps}, iterations={self.iterations}\n'
         output += f'Total reward: {sum(sum(self.scores)):,.2f}\n'
-        output += f'Mean reward per step: {sum(self.mean_reward_per_step)/self.steps:.4f}\n'
+        output += f'Mean reward per step: {sum(self.mean_reward_per_step) / self.steps:.4f}\n'
         return output
 
     def calculate_means(self):
@@ -40,7 +40,6 @@ class EnvironmentResult(object):
             output[idx] /= self.iterations
 
         return output
-
 
 
 class Environment:

@@ -2,6 +2,23 @@ import numpy as np
 
 
 class Agent:
+    """
+        Agent class
+            interface
+                num_actions: number of actions that can be taken in an environment
+                policy: policy agent uses to determine which action to choose next
+                init_value: starting value for the estimated_action_values
+            variables
+                last_action: holds the last chosen action
+                action_counts: count of plays on each action
+                action_total_rewards: sum of rewards from each action
+                estimated_action_values: estimated reward for each given action
+            methods
+                agent_label: returns a string label for identifying the agent
+                learn: given a reward and a new last action, update last action, total rewards, and counts
+                play: Uses policy to pick and action and return it
+                reset: resets the agent to initial settings for iterable testing
+    """
     def __init__(self, num_actions, policy, init_value=0, **kwargs):
         self.num_actions = num_actions
         self.init_value = init_value
