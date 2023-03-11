@@ -4,6 +4,12 @@ from reinforce.agents.agent import Agent
 from reinforce.environments.environment import Environment
 
 
+def show_summary(s, a, vals):
+    print(s.scenario_label())
+    print(a.agent_label())
+    print(f'{sum(sum(vals)):,.2f}\n')
+
+
 if __name__ == '__main__':
     # Initial config
     k_arms = 10
@@ -18,10 +24,8 @@ if __name__ == '__main__':
         agent = Agent(num_actions=k_arms, policy=policy)
         environment = Environment(scenario=scenario, agent=agent, steps=steps, iterations=runs)
         scores, _ = environment.run()
-        print(f'Epsilon-Greedy Run {run} - Complete')
-        print(scenario.scenario_label())
-        print(agent.agent_label())
-        print(f'{sum(sum(scores)):,.2f}\n')
+        print(f'Epsilon-Greedy Run {run+1} - Complete')
+        show_summary(scenario, agent, scores)
 
     # Test alternative greedy
     agents = [
@@ -33,17 +37,13 @@ if __name__ == '__main__':
         scenario = Bandit(arms=k_arms, mean=0, std=1)
         environment = Environment(scenario=scenario, agent=agent, steps=steps, iterations=runs)
         scores, _ = environment.run()
-        print(f'Greedy Run {run} - Complete')
-        print(scenario.scenario_label())
-        print(agent.agent_label())
-        print(f'{sum(sum(scores)):,.2f}\n')
+        print(f'Greedy Run {run+1} - Complete')
+        show_summary(scenario, agent, scores)
 
     # Test random selection policy
     scenario = Bandit(arms=k_arms, mean=0, std=1)
     agent = Agent(num_actions=k_arms, policy=Policy())
     environment = Environment(scenario=scenario, agent=agent, steps=steps, iterations=runs)
     scores, _ = environment.run()
-    print(f'Random Run - Complete')
-    print(scenario.scenario_label())
-    print(agent.agent_label())
-    print(f'{sum(sum(scores)):,.2f}')
+    print(f'Random Run 1 - Complete')
+    show_summary(scenario, agent, scores)
