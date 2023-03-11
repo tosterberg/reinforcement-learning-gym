@@ -13,10 +13,9 @@ class Policy:
 
 
 class GreedyPolicy(Policy):
-    def __init__(self, alt_init_value=None):
+    def __init__(self):
         super().__init__(name='Greedy')
         self.initialized = False  # Set to true after trying every arm once then greedy
-        self.alt_init_value = alt_init_value
         self. explored = None
 
     def policy_label(self):
