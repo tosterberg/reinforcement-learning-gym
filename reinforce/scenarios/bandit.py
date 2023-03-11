@@ -53,8 +53,8 @@ class Bandit:
     def summarize(self):
         print(self.scenario_label())
 
-    def reward(self, choice):
-        return self.reward_func(self.actions[choice], scale=self.scale)
+    def reward(self, action):
+        return self.reward_func(self.actions[action], scale=self.scale)
 
     def reset(self):
         self.actions = self.distribution_func(self.mean, self.std, self.arms)

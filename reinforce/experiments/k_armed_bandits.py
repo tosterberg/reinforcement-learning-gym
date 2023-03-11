@@ -2,7 +2,6 @@ from reinforce.scenarios.bandit import Bandit
 from reinforce.policies.policy import EpsilonGreedyPolicy, GreedyPolicy, Policy
 from reinforce.agents.agent import Agent
 from reinforce.environments.environment import Environment
-from reinforce.utils.utils import show_summary
 
 
 if __name__ == '__main__':
@@ -18,9 +17,9 @@ if __name__ == '__main__':
         policy = EpsilonGreedyPolicy(epsilon=epsilon)
         agent = Agent(num_actions=k_arms, policy=policy)
         environment = Environment(scenario=scenario, agent=agent, steps=steps, iterations=runs)
-        scores, _ = environment.run()
+        environment.run()
         print(f'Epsilon-Greedy Run {run+1} - Complete')
-        show_summary(scenario, agent, scores)
+        environment.summarize_test()
 
     # Test alternative greedy
     agents = [
@@ -31,14 +30,14 @@ if __name__ == '__main__':
     for run, agent in enumerate(agents):
         scenario = Bandit(arms=k_arms, mean=0, std=1)
         environment = Environment(scenario=scenario, agent=agent, steps=steps, iterations=runs)
-        scores, _ = environment.run()
+        environment.run()
         print(f'Greedy Run {run+1} - Complete')
-        show_summary(scenario, agent, scores)
+        environment.summarize_test()
 
     # Test random selection policy
     scenario = Bandit(arms=k_arms, mean=0, std=1)
     agent = Agent(num_actions=k_arms, policy=Policy())
     environment = Environment(scenario=scenario, agent=agent, steps=steps, iterations=runs)
-    scores, _ = environment.run()
+    environment.run()
     print(f'Random Run 1 - Complete')
-    show_summary(scenario, agent, scores)
+    environment.summarize_test()
