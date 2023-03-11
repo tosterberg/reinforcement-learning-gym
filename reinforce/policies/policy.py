@@ -13,17 +13,18 @@ class Policy:
 
 
 class GreedyPolicy(Policy):
-    def __init__(self):
+    def __init__(self, initialized=False):
         super().__init__(name='Greedy')
-        self.initialized = False  # Set to true after trying every arm once then greedy
-        self. explored = None
+        self.initialized = initialized  # Set to true after trying every arm once then greedy
+        self.explored = None
 
     def policy_label(self):
-        return str(self.name)
+        config = 'Pull once' if self.explored is None else 'Agent initialized'
+        return f'{self.name}: {config}'
 
     def initial_plays(self, num_actions):
         if self.explored is None:
-            self.explored = num_actions
+            self.explored = num_actions - 1
             return self.explored
         action = self.explored
         self.explored -= 1
