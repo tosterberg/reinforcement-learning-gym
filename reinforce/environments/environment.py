@@ -28,6 +28,7 @@ class EnvironmentResult(object):
         output += f'Total reward: {sum(sum(self.scores)):,.2f}\n'
         return output
 
+
 class Environment:
     def __init__(self, scenario, agent, steps, iterations, **kwargs):
         self.scenario = scenario
@@ -40,6 +41,7 @@ class Environment:
         for k, v in kwargs.items():
             setattr(self, k, v)
         self._validate()
+        self.run()
 
     def run(self):
         scores = np.zeros(self.steps)
@@ -76,7 +78,6 @@ class Environment:
 
     def summarize_test(self):
         print(str(self.results))
-
 
     def _validate(self):
         assert (self.scenario is not None)
