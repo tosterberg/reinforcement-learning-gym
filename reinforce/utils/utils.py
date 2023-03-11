@@ -2,8 +2,6 @@
     Utility Functions
         conversions:
             dict -> str (recursive)
-        output:
-            show_summary (scenario, agent, scores)
 """
 
 

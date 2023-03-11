@@ -43,6 +43,24 @@ class EnvironmentResult(object):
 
 
 class Environment:
+    """
+        Environment class
+            interface
+                scenario: scenarios provide the number of actions, and their rewards'
+                agent: agents interact with a scenario in an environment
+                steps: number of interactions agents get with scenario
+                iterations: number of times the scenario and agent repeat their steps
+            variables
+                result_scores: list of scores from the environment run
+                result_opt: list of counts where the agent chose optimally
+                results: summary object detailing the environment run
+            methods:
+                run: executes the simulation given the environmental config
+                setup_tests: resets agent, and scenario then records the result
+                score_agent: iterates interactions between scenario and agent for given steps
+                    recording the rewards and optimal plays
+                summarize_test: prints the results of the environmental run
+    """
     def __init__(self, scenario, agent, steps, iterations, **kwargs):
         self.scenario = scenario
         self.agent = agent
