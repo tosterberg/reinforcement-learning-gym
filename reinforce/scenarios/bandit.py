@@ -11,12 +11,18 @@ class Bandit:
             arms - number of bandits available in environment for reward
             mean - the mean value of the distribution of each bandit
             std - the standard deviation of the distribution of each bandit
+            seed - random seed to set the random functions with
             distribution - function name for the actions distribution setup
+            reward_dist - function name for the rewards distribution setup
+            scale - scaling value for the reward_dist function
         variables
-            opt - maximum value in the action array
+            label - scenario name
+            opt - maximum value action index in the action array
         methods
             distribution_func - the np.random function for the given distribution
+            reward_func - the np.random function for the given distribution
             reset - resets the bandit arms action values to new values
+            reward - return reward value given action choice
     """
     def __init__(self, arms=0, mean=0, std=1, seed=42,
                  distribution='normal', reward_dist='normal', scale=1, **kwargs):
