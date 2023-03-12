@@ -11,8 +11,28 @@ class Policy:
                     returns the action determined by the policy
                 policy_label: returns the name of the policy
     """
-    def __init__(self, name='Random'):
+    def __init__(self, name='Policy Name'):
         self.name = name
+
+    def __str__(self):
+        return str(self.name)
+
+    def apply(self, estimated_values, num_actions):
+        return np.random.choice(len(estimated_values))
+
+
+class RandomPolicy(Policy):
+    """
+        RandomPolicy class
+            interface
+                name: overwrite the specified policy name for reporting
+            methods
+                apply: given estimated rewards, and number of actions available
+                    returns the action determined by the policy
+                policy_label: returns the name of the policy
+    """
+    def __init__(self):
+        super().__init__(name='Random')
 
     def __str__(self):
         return str(self.name)

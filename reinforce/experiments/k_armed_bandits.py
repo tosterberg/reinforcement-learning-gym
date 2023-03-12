@@ -1,5 +1,5 @@
 from reinforce.scenarios.bandit import Bandit
-from reinforce.policies.policy import EpsilonGreedyPolicy, GreedyPolicy, Policy
+from reinforce.policies.policy import EpsilonGreedyPolicy, GreedyPolicy, RandomPolicy
 from reinforce.agents.agent import Agent
 from reinforce.environments.environment import Environment
 from reinforce.utils.utils import plot_env_result
@@ -34,7 +34,7 @@ if __name__ == '__main__':
         results.append(environment.results)
 
     # Test random selection policy
-    agent = Agent(num_actions=k_arms, policy=Policy())
+    agent = Agent(num_actions=k_arms, policy=RandomPolicy())
     environment = Environment(scenario=scenario, agent=agent, steps=steps, iterations=runs)
     environment.summarize_test()
     results.append(environment.results)
