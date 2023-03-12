@@ -84,7 +84,7 @@ class EpsilonGreedyPolicy(Policy):
         super().__init__(name=f'EpsilonGreedy: {self.epsilon:.2f}')
 
     def __str__(self):
-        return super.__str__(self)
+        return str(self.name)
 
     def apply(self, estimated_values, num_actions):
         self.estimated_values = estimated_values

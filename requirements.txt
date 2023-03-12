@@ -1,0 +1,11 @@
+# General
+numpy
+pandas
+scipy
+
+# Plotting
+matplotlib
+seaborn
+
+# Meta
+dataclasses

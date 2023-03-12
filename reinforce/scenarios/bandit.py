@@ -38,8 +38,13 @@ class Bandit:
             setattr(self, k, v)
         self._validate()
         self.actions = np.zeros(self.arms)
-        self.distribution_func = getattr(np.random, self.distribution)
-        self.reward_func = getattr(np.random, self.reward_dist)
+        self.distribution_func = getattr(np.random, self.distribution) \
+            if hasattr(np.random, self.distribution) else \
+            lambda x, y, z: self.distribution
+
+        self.reward_func = getattr(np.random, self.reward_dist) \
+            if hasattr(np.random, self.reward_dist) else \
+            lambda x, scale: self.reward_dist
         self.opt = 0
         self.reset()
 
