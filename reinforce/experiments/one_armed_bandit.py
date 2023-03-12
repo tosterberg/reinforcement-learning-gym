@@ -111,12 +111,10 @@ def single_bandit_plots(count, data, mean, var, svar):
 
 
 def main():
-    seed = None
     n = 10000
     mu = 1.0
     sigma = 10.0
 
-    random.seed(seed)
     run_experiment(mu, sigma, n)
 
 
