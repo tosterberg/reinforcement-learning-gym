@@ -19,7 +19,9 @@ class EnvironmentResult(object):
         self.iterations = iterations
         self.scores = scores
         self.optimal_actions = optimal_actions
-        self.mean_reward_per_step = self.calculate_means()
+        self.mean_reward_per_step = None
+        self.mean_cumulative_reward_per_step = None
+        self.calculate_metrics()
 
     def __str__(self):
         output = ''
@@ -30,16 +32,21 @@ class EnvironmentResult(object):
         output += f'Mean reward per step: {sum(self.mean_reward_per_step) / self.steps:.4f}\n'
         return output
 
-    def calculate_means(self):
-        output = np.zeros(self.steps)
+    def calculate_metrics(self):
+        self.mean_reward_per_step = np.zeros(self.steps)
         for score in self.scores:
             for i in range(len(score)):
-                output[i] += score[i]
+                self.mean_reward_per_step[i] += score[i]
 
-        for idx in range(len(output)):
-            output[idx] /= self.iterations
+        for i in range(len(self.mean_reward_per_step)):
+            self.mean_reward_per_step[i] /= self.iterations
 
-        return output
+        accumulator = 0
+        self.mean_cumulative_reward_per_step = np.zeros(self.steps)
+        for i in range(len(self.mean_reward_per_step)):
+            self.mean_cumulative_reward_per_step[i] = (self.mean_reward_per_step[i] + accumulator) / (i+1)
+            accumulator += self.mean_reward_per_step[i]
+
 
 
 class Environment:
