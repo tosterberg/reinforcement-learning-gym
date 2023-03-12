@@ -14,7 +14,7 @@ class Policy:
     def __init__(self, name='Random'):
         self.name = name
 
-    def policy_label(self):
+    def __str__(self):
         return str(self.name)
 
     def apply(self, estimated_values, num_actions):
@@ -41,7 +41,7 @@ class GreedyPolicy(Policy):
         self.initialized = initialized  # Set to true after trying every arm once then greedy
         self.explored = None
 
-    def policy_label(self):
+    def __str__(self):
         config = 'Pull once' if self.explored is None else 'Agent initialized'
         return f'{self.name}: {config}'
 
@@ -83,8 +83,8 @@ class EpsilonGreedyPolicy(Policy):
         self.epsilon = epsilon
         super().__init__(name=f'EpsilonGreedy: {self.epsilon:.2f}')
 
-    def policy_label(self):
-        return str(self.name)
+    def __str__(self):
+        return super.__str__(self)
 
     def apply(self, estimated_values, num_actions):
         self.estimated_values = estimated_values

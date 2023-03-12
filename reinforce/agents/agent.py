@@ -30,8 +30,8 @@ class Agent:
         for k, v in kwargs.items():
             setattr(self, k, v)
 
-    def agent_label(self):
-        return f'{self.policy.policy_label()}, init_values={self.init_value}'
+    def __str__(self):
+        return f'{self.policy}, init_values={self.init_value}'
 
     def learn(self, reward):
         if self.last_action is None:

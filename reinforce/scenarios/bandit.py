@@ -1,5 +1,4 @@
 import numpy as np
-from reinforce.utils import utils
 
 
 class Bandit:
@@ -45,13 +44,7 @@ class Bandit:
         self.reset()
 
     def __str__(self):
-        return utils.dict_to_string(self)
-
-    def scenario_label(self):
         return f'{self.label}: arms={self.arms}, mean={self.mean}, std={self.std}'
-
-    def summarize(self):
-        print(self.scenario_label())
 
     def reward(self, action):
         return self.reward_func(self.actions[action], scale=self.scale)

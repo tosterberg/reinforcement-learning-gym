@@ -44,9 +44,8 @@ class EnvironmentResult(object):
         accumulator = 0
         self.mean_cumulative_reward_per_step = np.zeros(self.steps)
         for i in range(len(self.mean_reward_per_step)):
-            self.mean_cumulative_reward_per_step[i] = (self.mean_reward_per_step[i] + accumulator) / (i+1)
+            self.mean_cumulative_reward_per_step[i] = (self.mean_reward_per_step[i] + accumulator) / (i + 1)
             accumulator += self.mean_reward_per_step[i]
-
 
 
 class Environment:
@@ -68,6 +67,7 @@ class Environment:
                     recording the rewards and optimal plays
                 summarize_test: prints the results of the environmental run
     """
+
     def __init__(self, scenario, agent, steps, iterations, **kwargs):
         self.scenario = scenario
         self.agent = agent
@@ -86,8 +86,8 @@ class Environment:
         optimal_scores = np.zeros(self.steps)
         self.setup_tests(scores, optimal_scores)
         self.results = EnvironmentResult(
-            agent_label=self.agent.agent_label(),
-            scenario_label=self.scenario.scenario_label(),
+            agent_label=str(self.agent),
+            scenario_label=str(self.scenario),
             steps=self.steps,
             iterations=self.iterations,
             scores=self.result_scores,
