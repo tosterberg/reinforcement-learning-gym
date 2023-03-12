@@ -61,7 +61,6 @@ class Bandit:
 
     def _validate(self):
         assert (self.arms > 0)
-        assert (hasattr(np.random, self.distribution))
 
 
 class ProvidedBandit:
