@@ -8,7 +8,7 @@ from reinforce.utils.utils import plot_env_result
 if __name__ == '__main__':
     # Initial config
     k_arms = 10
-    steps = 10000
+    steps = 2000
     runs = 100
 
     scenario = Bandit(arms=k_arms, mean=0, std=1)
@@ -21,8 +21,6 @@ if __name__ == '__main__':
         environment = Environment(scenario=scenario, agent=agent, steps=steps, iterations=runs)
         environment.summarize_test()
         results.append(environment.results)
-    plot_env_result(results)
-    results = []
 
     # Test alternative greedy
     agents = [
@@ -34,8 +32,6 @@ if __name__ == '__main__':
         environment = Environment(scenario=scenario, agent=agent, steps=steps, iterations=runs)
         environment.summarize_test()
         results.append(environment.results)
-    plot_env_result(results)
-    results = []
 
     # Test random selection policy
     agent = Agent(num_actions=k_arms, policy=Policy())

@@ -43,7 +43,7 @@ def plot_env_result(env_results: [EnvironmentResult]):
             "value": env.mean_cumulative_reward_per_step
         }
         pd_data = pd.DataFrame(description)
-        ax = sns.lineplot(x="steps", y="value", data=pd_data, label=env.agent_label, alpha=0.5)
+        ax = sns.lineplot(x="steps", y="value", data=pd_data, label=env.agent_label)
         ax.set(xscale="linear", yscale="linear")
         ax.set_xlabel("Steps")
         ax.set_ylabel("Rewards")
