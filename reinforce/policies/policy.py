@@ -132,7 +132,7 @@ class UCBPolicy(Policy):
     """
         UCBPolicy class extends Policy class
         interface
-                epsilon: probability that exploratory actions are taken rather than greedy actions
+                alpha: probability that exploratory actions are taken rather than greedy actions
             methods
                 apply: given estimated rewards, and number of actions available
                     returns the action determined by the policy
@@ -153,4 +153,27 @@ class UCBPolicy(Policy):
         pass
 
     def _upper_bound(self):
+        pass
+
+
+class SoftmaxPolicy(Policy):
+    """
+        SoftmaxPolicy class extends Policy class
+        interface
+            methods
+                apply: given estimated rewards, and number of actions available
+                    returns the action determined by the policy
+                policy_label: returns the name of the policy
+            private methods:
+
+    """
+    def __init__(self, alpha=0):
+        self.estimated_values = None
+        self.alpha = alpha
+        super().__init__(name=f'UCB: {self.alpha:.2f}')
+
+    def __str__(self):
+        return str(self.name)
+
+    def apply(self, estimated_values, num_actions):
         pass
