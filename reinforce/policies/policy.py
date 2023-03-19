@@ -177,3 +177,27 @@ class SoftmaxPolicy(Policy):
 
     def apply(self, estimated_values, num_actions):
         pass
+
+
+class StateBasedPolicy(Policy):
+    """
+        SoftmaxPolicy class extends Policy class
+        interface
+            methods
+                apply: given estimated rewards, and number of actions available
+                    returns the action determined by the policy
+                policy_label: returns the name of the policy
+            private methods:
+
+    """
+    def __init__(self, states):
+        self.estimated_values = None
+        self.states = states
+        self.current_state = None
+        super().__init__(name=f'StatefulPolicy: {self.states}')
+
+    def __str__(self):
+        return str(self.name)
+
+    def apply(self, estimated_values, num_actions):
+        pass

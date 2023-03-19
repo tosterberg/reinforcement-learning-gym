@@ -10,15 +10,13 @@ class EnvironmentResult(object):
     steps: int
     iterations: int
     scores: list
-    optimal_actions: list
 
-    def __init__(self, agent_label, scenario_label, steps, iterations, scores, optimal_actions):
+    def __init__(self, agent_label, scenario_label, steps, iterations, scores):
         self.agent_label = agent_label
         self.scenario_label = scenario_label
         self.steps = steps
         self.iterations = iterations
         self.scores = scores
-        self.optimal_actions = optimal_actions
         self.mean_reward_per_step = None
         self.mean_cumulative_reward_per_step = None
         self.calculate_metrics()
@@ -74,7 +72,6 @@ class Environment:
         self.steps = steps
         self.iterations = iterations
         self.result_scores = list()
-        self.result_opt = list()
         self.results = None
         for k, v in kwargs.items():
             setattr(self, k, v)
@@ -83,36 +80,30 @@ class Environment:
 
     def run(self):
         scores = np.zeros(self.steps)
-        optimal_scores = np.zeros(self.steps)
-        self.setup_tests(scores, optimal_scores)
+        self.setup_tests(scores)
         self.results = EnvironmentResult(
             agent_label=str(self.agent),
             scenario_label=str(self.scenario),
             steps=self.steps,
             iterations=self.iterations,
-            scores=self.result_scores,
-            optimal_actions=self.result_opt
+            scores=self.result_scores
         )
 
-    def setup_tests(self, scores, optimal_scores):
+    def setup_tests(self, scores):
         for test in range(self.iterations):
             self.scenario.reset()
             self.agent.reset()
-            avg, opt = self.score_agent(scores, optimal_scores)
+            avg = self.score_agent(scores)
             self.result_scores.append(avg)
-            self.result_opt.append(opt)
 
-    def score_agent(self, scores, optimal_scores):
+    def score_agent(self, scores):
         for step in range(self.steps):
             action = self.agent.play()
             reward = self.scenario.reward(action)
             self.agent.learn(reward)
             scores[step] += reward
-            if action == self.scenario.opt:
-                optimal_scores[step] += 1
         avg_score = scores / self.iterations
-        opt_score = optimal_scores / self.iterations
-        return avg_score, opt_score
+        return avg_score
 
     def summarize_test(self):
         print(str(self.results))
