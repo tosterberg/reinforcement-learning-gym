@@ -1,4 +1,4 @@
-from rlgridworld.node import Node
+from reinforce.utils.rlgridworld.node import Node
 
 class Grid:
     """GridWorld's Grid of Nodes"""

@@ -1,4 +1,4 @@
-from rlgridworld.grid import Grid
+from reinforce.utils.rlgridworld.grid import Grid
 
 # defines a functions of a state, i.e., whose domain is a state
 

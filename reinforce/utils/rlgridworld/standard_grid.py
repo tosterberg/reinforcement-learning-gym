@@ -1,4 +1,4 @@
-from rlgridworld.grid import Grid
+from reinforce.utils.rlgridworld.grid import Grid
 
 def create_standard_grid(rewards=0.0):
     M = 3  # number of rows

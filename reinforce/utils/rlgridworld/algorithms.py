@@ -1,4 +1,4 @@
-from rlgridworld.grid import Grid
+from reinforce.utils.rlgridworld.grid import Grid
 
 # from page 75 of Sutton and Barto, RL, 2nd. Ed.
 
